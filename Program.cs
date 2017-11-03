@@ -14,8 +14,8 @@ namespace FixedWidthToExcel
     {
         static void Main(string[] args)
         {
-            string dbServerName = "MCMDSSQLDESQL01";
-            string dbDatabaseName = "MacmillanDataStoreDev2";
+            string dbServerName = ""; /// SET ME
+            string dbDatabaseName = ""; /// SET ME
             if (args.Length == 0)
             {
                 System.Console.WriteLine("Please enter the path to the fixed width file or ? for help.");
@@ -43,7 +43,7 @@ namespace FixedWidthToExcel
                 dbDatabaseName = args[2];
             }
             LoadExcel(args[0], dbServerName, dbDatabaseName);
-            //LoadExcel(@"C:\Projects\TestImportFiles\Main files\Phrasis supporter import_3012_2015_04_02_150.txt", dbServerName, dbDatabaseName);
+            //LoadExcel(@"", dbServerName, dbDatabaseName);
 
         }
 
