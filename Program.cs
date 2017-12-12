@@ -43,15 +43,15 @@ namespace FixedWidthToExcel
                 dbDatabaseName = args[2];
             }
             LoadExcel(args[0], dbServerName, dbDatabaseName);
-            //LoadExcel(@"", dbServerName, dbDatabaseName);
+            //LoadExcel( @"", dbServerName, dbDatabaseName);
 
         }
 
         static void LoadExcel(string textFilePath, string dbServerName, string dbDatabaseName)
         {
-            
             if (textFilePath == null | textFilePath == "" | !File.Exists(textFilePath))
             {
+
                 Console.WriteLine("File foesn't exist: {0}", textFilePath);
                 Console.ReadKey();
                 return;
@@ -65,7 +65,7 @@ namespace FixedWidthToExcel
 
             //using (SqlConnection conn = new SqlConnection("Server=" + dbServerName + ";Database=" + dbDatabaseName + ";Integrated Security=SSPI;"))
             using (SqlConnection conn = new SqlConnection(sscsb.ConnectionString))
-            using (SqlCommand cmd = new SqlCommand("SELECT ColumnWidth, FileColumnName FROM control.SupplierImport si JOIN control.SupplierImportColumn sic ON sic.SupplierImportID = si.SupplierImportID WHERE @fileName LIKE REPLACE(si.FileNameMask, '.', '%') AND si.FileType = 'Fixed width' ORDER BY sic.ColumnOrdinal ASC;  ", conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT sic.ColumnWidth, sic.FileColumnName, MIN(sic.ColumnOrdinal) FROM control.SupplierImport si JOIN control.SupplierImportColumn sic ON sic.SupplierImportID = si.SupplierImportID WHERE @fileName LIKE REPLACE(si.FileNameMask, '.', '%') AND si.FileType = 'Fixed width' GROUP BY sic.ColumnWidth, sic.FileColumnName ORDER BY MIN(sic.ColumnOrdinal) ASC;  ", conn))
 
             {
                 try
